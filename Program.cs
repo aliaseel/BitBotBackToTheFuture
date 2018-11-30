@@ -27,7 +27,7 @@ class MainClass
 
     //REAL NET
     public static string version = "0.0.2.13";
-    public static string location = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\";
+    public static string location = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + System.IO.Path.DirectorySeparatorChar;
 
     public static string bitmexKey = "";
     public static string bitmexSecret = "";
@@ -168,8 +168,12 @@ class MainClass
                 System.Threading.Thread tCapture = new Thread(Database.captureDataJob);
                 tCapture.Start();
                 System.Threading.Thread.Sleep(1000);
-                System.Diagnostics.Process.Start(jCointaner["webserverConfig"].ToString());
-
+                OperatingSystem os = Environment.OSVersion;
+                PlatformID pid = os.Platform;
+                if(pid != PlatformID.Unix)
+                {
+                    System.Diagnostics.Process.Start(jCointaner["webserverConfig"].ToString());
+                }
             }
 
 
