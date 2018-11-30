@@ -702,12 +702,17 @@ class MainClass
                                             makeOrder("Buy", true);
                                             for (int i = 0; i < 20; i++)
                                             {
-                                                Thread.Sleep(6000);
-                                                if (Math.Abs(getPosition()) > 0)
+                                                if (Math.Abs(getOpenOrderQty()) == 0)
                                                 {
-                                                    fixOrdersPosition();
+                                                    bitMEXApi.CancelAllOpenOrders(pair);
                                                     break;
                                                 }
+                                                if (Math.Abs(getPosition()) > 0)
+                                                {
+                                                    fixOrdersPosition(false);
+                                                    break;
+                                                }
+                                                Thread.Sleep(5000);
                                             }
                                             if (Math.Abs(getPosition()) == 0)
                                                 bitMEXApi.CancelAllOpenOrders(pair);
@@ -716,20 +721,25 @@ class MainClass
                                         {
                                             makeOrder("Sell", true);
                                             for (int i = 0; i < 20; i++)
-                                            {
-                                                Thread.Sleep(6000);
-                                                if (Math.Abs(getPosition()) > 0)
+                                            {                                                
+                                                if (Math.Abs(getOpenOrderQty()) == 0)
                                                 {
-                                                    fixOrdersPosition();
+                                                    bitMEXApi.CancelAllOpenOrders(pair);
                                                     break;
                                                 }
+                                                if (Math.Abs(getPosition()) > 0)
+                                                {
+                                                    fixOrdersPosition(false);
+                                                    break;
+                                                }
+                                                Thread.Sleep(5000);
                                             }
                                             if (Math.Abs(getPosition()) == 0)
                                                 bitMEXApi.CancelAllOpenOrders(pair);
 
                                         }
 
-                                   
+
                                     }
                                 }
 

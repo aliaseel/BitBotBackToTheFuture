@@ -78,19 +78,21 @@ public class IndicatorCAROL : IndicatorBase, IIndicator
             MainClass.log("RSI " + rsi.result);
 
             if (cci.result > 0 && operationMACD == Operation.buy && rsi.result > 50 && cci.getTendency() == Tendency.high && rsi.getTendency() == Tendency.high)
+            //if (operationMACD == Operation.buy)
             {
                 double[] arrayresultMA = new double[arrayPriceClose.Length];
                 int outBegidx, outNbElement;
-                TicTacTec.TA.Library.Core.MovingAverage(0, arrayPriceClose.Length - 1, arrayPriceClose, 200, TicTacTec.TA.Library.Core.MAType.Ema, out outBegidx, out outNbElement, arrayresultMA);
-                if (arrayresultMA[outNbElement - 1] > arrayresultMA[outNbElement - 10] && arrayPriceClose[arrayPriceClose.Length - 1] > arrayresultMA[outNbElement - 1])
+                TicTacTec.TA.Library.Core.MovingAverage(0, arrayPriceClose.Length - 1, arrayPriceClose, 100, TicTacTec.TA.Library.Core.MAType.Ema, out outBegidx, out outNbElement, arrayresultMA);
+                if (arrayPriceClose[arrayPriceClose.Length - 1] > arrayresultMA[outNbElement - 1])
                     return Operation.buy;
             }
             if (cci.result < 0 && operationMACD == Operation.sell && rsi.result < 50 && cci.getTendency() == Tendency.low && rsi.getTendency() == Tendency.low)
+            //if (operationMACD == Operation.sell)
             {
                 double[] arrayresultMA = new double[arrayPriceClose.Length];
                 int outBegidx, outNbElement;
-                TicTacTec.TA.Library.Core.MovingAverage(0, arrayPriceClose.Length - 1, arrayPriceClose, 200, TicTacTec.TA.Library.Core.MAType.Ema, out outBegidx, out outNbElement, arrayresultMA);
-                if (arrayresultMA[outNbElement - 1] < arrayresultMA[outNbElement - 10] && arrayPriceClose[arrayPriceClose.Length - 1] < arrayresultMA[outNbElement - 1])
+                TicTacTec.TA.Library.Core.MovingAverage(0, arrayPriceClose.Length - 1, arrayPriceClose, 100, TicTacTec.TA.Library.Core.MAType.Ema, out outBegidx, out outNbElement, arrayresultMA);
+                if (arrayPriceClose[arrayPriceClose.Length - 1] < arrayresultMA[outNbElement - 1])
                     return Operation.sell;
             }
 
